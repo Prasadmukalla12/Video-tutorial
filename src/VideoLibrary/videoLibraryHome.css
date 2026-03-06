@@ -1,11 +1,11 @@
 
 .admin{
-    background-image: url("admin.jpg");
+    background-image: url("../public/admin.jpg");
     background-size: cover;
     width: 45%;
 }
 .user{
-    background-image: url("user.jpg");
+    background-image: url("./user.jpg");
     background-size: cover;
     width: 45%;
 }

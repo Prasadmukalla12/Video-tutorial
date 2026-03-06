@@ -1,10 +1,6 @@
 import { BrowserRouter, Link, Route, Router, Routes } from "react-router-dom";
 import "./videoLibraryIndex.css"
 import { lazy, Suspense } from "react";
-// import EditVideo from "./editVideo";
-// import DeleteVideo from "./deleteVideo";
-// import AddVideo from "./addVideo";
-// import UserDashboard from "./userDashboard";
 
 const VideoLibraryHome = lazy(()=>
     import("./videoLibraryHome")
