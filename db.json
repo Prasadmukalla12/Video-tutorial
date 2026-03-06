@@ -1,0 +1,105 @@
+{
+  "admin": [
+    {
+      "id": "1",
+      "admin_id": "prasad_admin",
+      "password": "prasad123"
+    }
+  ],
+  "user": [
+    {
+      "id": "1",
+      "user_id": "sai_user",
+      "user_name": "saikumar",
+      "password": "sai123",
+      "email": "sai@gmail.com"
+    },
+    {
+      "id": "0c80",
+      "user_id": "arun_user",
+      "user_name": "arunmuddada",
+      "password": "arun123",
+      "email": "arun@gmail.com"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "category_id": 1,
+      "category_name": "react"
+    },
+    {
+      "id": "2",
+      "category_id": 2,
+      "category_name": "java"
+    },
+    {
+      "id": "3",
+      "category_id": 3,
+      "category_name": "python"
+    }
+  ],
+  "videos": [
+    {
+      "title": "React Online Class",
+      "url": "https://www.youtube.com/embed/U9sDK8zTJ8Y",
+      "likes": 208,
+      "dislikes": 24,
+      "views": 2000,
+      "comments": "nice video",
+      "category_id": 1,
+      "id": "1"
+    },
+    {
+      "title": "Java Online Class",
+      "url": "https://www.youtube.com/embed/6DP7cMN99zQ",
+      "likes": 110,
+      "dislikes": 21,
+      "views": 1000,
+      "comments": "I like this video",
+      "category_id": 2,
+      "id": "7813"
+    },
+    {
+      "id": "f541",
+      "title": "Python Online Class",
+      "url": "https://www.youtube.com/embed/4QZdk4f0T_A",
+      "likes": 503,
+      "dislikes": 6,
+      "views": 1500,
+      "comments": "good",
+      "category_id": 3
+    },
+    {
+      "id": "d4e1",
+      "title": "React Hooks Class",
+      "url": "https://www.youtube.com/embed/U2PiMIS75jU",
+      "likes": 2000,
+      "dislikes": 51,
+      "views": 5000,
+      "comments": "Excellent",
+      "category_id": 1
+    },
+    {
+      "title": "Java Madules",
+      "url": "https://www.youtube.com/embed/S91ZhTI0wjg",
+      "likes": 25,
+      "dislikes": 12,
+      "views": 250,
+      "comments": "Not good",
+      "category_id": 2,
+      "id": "635b"
+    },
+    {
+      "id": "01fd",
+      "title": "Python FAQ's",
+      "url": "https://www.youtube.com/embed/_uQrJ0TkZlc",
+      "likes": 421,
+      "dislikes": 30,
+      "views": 890,
+      "comments": "this video given information about python",
+      "category_id": 3
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
