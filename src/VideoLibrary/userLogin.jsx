@@ -3,6 +3,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup"
 
 
 export default function UserLogin(){
@@ -29,7 +30,11 @@ export default function UserLogin(){
                     alert("Invalid UserID")
                 }
             })
-        }
+        },
+        validationSchema : yup.object({
+            user_id:yup.string().required("User ID required"),
+            password:yup.string().required("Password required")
+        })
     })
 
    
@@ -45,11 +50,17 @@ export default function UserLogin(){
                     <div className="mt-2">
                         <TextField onChange={formik.handleChange} variant="standard" type="text" name="user_id" placeholder="Enter User ID" />
                     </div>
+                    <div>
+                        <span className="text-danger fw-semibold">{formik.errors.user_id}</span>
+                    </div>
                 </div>
                 <div>
                     <label>Password</label>
                     <div className="mt-2">
                         <TextField onChange={formik.handleChange} variant="standard" type="password" name="password" placeholder="Enter Password" />
+                    </div>
+                    <div>
+                        <span className="text-danger fw-semibold">{formik.errors.password}</span>
                     </div>
                 </div>
                 <div className="my-4">

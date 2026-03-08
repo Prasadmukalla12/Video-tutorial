@@ -1,6 +1,6 @@
 
 .admin{
-    background-image: url("../public/admin.jpg");
+    background-image: url("./admin.jpg");
     background-size: cover;
     width: 45%;
 }

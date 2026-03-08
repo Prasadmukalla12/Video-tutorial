@@ -1,6 +1,6 @@
 import { Button, Card, CardActions, CardHeader, CardMedia } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function DeleteVideo(){
@@ -10,7 +10,7 @@ export default function DeleteVideo(){
 
     const [video,setVideo] = useState({})
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
         axios.get(`http://localhost:3000/videos/${params.id}`)
         .then(res=>{
             setVideo(res.data)

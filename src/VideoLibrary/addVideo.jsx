@@ -2,6 +2,7 @@ import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@m
 import axios from "axios";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup"
 
 
 export default function AddVideo(){
@@ -33,7 +34,16 @@ export default function AddVideo(){
                 alert("New Video uploaded")
                 navigate("/admin-dashboard")
             })
-        }
+        },
+        validationSchema:yup.object({
+            title: yup.string().required("Title required"),
+            url:yup.string().required("URL required"),
+            likes:yup.number(),
+            dislikes:yup.number(),
+            comments:yup.string().required("required field"),
+            views:yup.number(),
+            category_id:yup.number().required("Category required")
+        })
     })
 
     return(
@@ -44,20 +54,38 @@ export default function AddVideo(){
                 <div className="col-6">
                     <TextField onChange={formik.handleChange} type="text" name="title" variant="standard" label="Title" />
                 </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.title}</span>
+                </div>
                 <div className="col-6 my-1">
                     <TextField onChange={formik.handleChange} type="url" name="url" variant="standard" label="URL" />
+                </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.url}</span>
                 </div>
                 <div className="col-6">
                     <TextField onChange={formik.handleChange} type="number" name="likes" variant="standard" label="Likes" />
                 </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.likes}</span>
+                </div>
                 <div className="col-6 mt-1">
                     <TextField onChange={formik.handleChange} type="number" name="dislikes" variant="standard" label="Dislikes" />
+                </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.dislikes}</span>
                 </div>
                 <div className="col-6">
                     <TextField onChange={formik.handleChange} type="number" name="views" variant="standard" label="Views" />
                 </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.views}</span>
+                </div>
                 <div className="col-6 mt-1">
                     <TextField onChange={formik.handleChange} type="text" name="comments" variant="standard" label="Comments" />
+                </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.comments}</span>
                 </div>
                 <div className="col-6 mt-1">
                     <FormControl fullWidth>
@@ -68,6 +96,9 @@ export default function AddVideo(){
                            <MenuItem value="3">Python</MenuItem>
                          </Select>
                      </FormControl>
+                </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.category_id}</span>
                 </div>
                 <div className="my-4">
                     <Button type="submit" sx={{marginRight:"10px"}} variant="contained" color="success"  >Save</Button>

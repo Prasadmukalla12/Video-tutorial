@@ -1,9 +1,10 @@
 import { Button, TextField } from "@mui/material"
 import axios from "axios"
 import { useFormik } from "formik"
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { useNavigate } from "react-router-dom"
+import * as yup from "yup"
 
 
 export default function AdminLogin(){
@@ -32,7 +33,11 @@ export default function AdminLogin(){
                 alert("Invalid Admin")
             }
         })
-        }
+        },
+        validationSchema : yup.object({
+            admin_id:yup.string().required("Admin ID required"),
+            password : yup.string().required("Password required")
+        })
     })
 
     useEffect(()=>{
@@ -53,11 +58,17 @@ export default function AdminLogin(){
                     <div className="mt-2">
                         <TextField fullWidth onChange={formik.handleChange} name="admin_id" variant="standard" type="text" placeholder="Enter Admin ID" />
                     </div>
+                    <div>
+                        <span className="text-danger fw-semibold">{formik.errors.admin_id}</span>
+                    </div>
                 </div>
                 <div>
                     <label>Password</label>
                     <div className="mt-2">
                         <TextField fullWidth onChange={formik.handleChange} name="password" variant="standard" type="password" placeholder="Enter Password" />
+                    </div>
+                    <div>
+                        <span className="text-danger fw-semibold">{formik.errors.password}</span>
                     </div>
                 </div>
                 <div className="my-3">

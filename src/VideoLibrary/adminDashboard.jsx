@@ -1,5 +1,6 @@
 import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia } from "@mui/material"
 import axios from "axios"
+import { useLayoutEffect } from "react"
 import { useCallback, useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { useNavigate } from "react-router-dom"
@@ -29,7 +30,7 @@ export default function AdminDashboard(){
         )
     }
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
         LoadVideos()
         LoadCategories()
         if(!cookie['admin_id']){

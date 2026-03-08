@@ -1,8 +1,9 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import * as yup from "yup"
 
 
 export default function EditVideo(){
@@ -15,7 +16,7 @@ export default function EditVideo(){
         navigate("/admin-dashboard")
     }
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
         axios.get(`http://localhost:3000/videos/${params.id}`)
         .then(res=>{
             setVideo(res.data)
@@ -49,6 +50,15 @@ export default function EditVideo(){
                 navigate("/admin-dashboard")
             })
         },
+        validationSchema : yup.object({
+            title: yup.string().required("Title required"),
+            url:yup.string().required("URL required"),
+            likes:yup.number(),
+            dislikes:yup.number(),
+            comments:yup.string().required("required field"),
+            views:yup.number(),
+            category_id:yup.number().required("Category required")
+        }),
         enableReinitialize : true
     })
 
@@ -60,20 +70,38 @@ export default function EditVideo(){
                 <div className="col-6">
                     <TextField onChange={formik.handleChange} value={formik.values.title} type="text" name="title" variant="standard" label="Title" />
                 </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.title}</span>
+                </div>
                 <div className="col-6 my-1">
                     <TextField onChange={formik.handleChange} value={formik.values.url} type="url" name="url" variant="standard" label="URL" />
+                </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.url}</span>
                 </div>
                 <div className="col-6">
                     <TextField onChange={formik.handleChange} value={formik.values.likes} type="number" name="likes" variant="standard" label="Likes" />
                 </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.likes}</span>
+                </div>
                 <div className="col-6 mt-1">
                     <TextField onChange={formik.handleChange} value={formik.values.dislikes} type="number" name="dislikes" variant="standard" label="Dislikes" />
+                </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.dislikes}</span>
                 </div>
                 <div className="col-6">
                     <TextField onChange={formik.handleChange} value={formik.values.views} type="number" name="views" variant="standard" label="Views" />
                 </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.views}</span>
+                </div>
                 <div className="col-6 mt-1">
                     <TextField onChange={formik.handleChange} value={formik.values.comments} type="text" name="comments" variant="standard" label="Comments" />
+                </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.comments}</span>
                 </div>
                 <div className="col-6 mt-1">
                     <FormControl fullWidth>
@@ -84,6 +112,9 @@ export default function EditVideo(){
                            <MenuItem value="3">Python</MenuItem>
                          </Select>
                      </FormControl>
+                </div>
+                <div>
+                    <span className="text-danger fw-semibold">{formik.errors.category_id}</span>
                 </div>
                 <div className="my-4">
                     <Button type="submit" sx={{marginRight:"10px"}} variant="contained" color="success">Save</Button>

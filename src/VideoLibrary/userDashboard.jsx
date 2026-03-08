@@ -1,7 +1,7 @@
 
 import {Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia } from "@mui/material"
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState, useTransition } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { addToCartClick, removeToCartList } from "../slicer/slicer"
@@ -58,7 +58,7 @@ export default function UserDashboard(){
         })
     }
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
          LoadVideos()
         LoadCategories()
     },[])
