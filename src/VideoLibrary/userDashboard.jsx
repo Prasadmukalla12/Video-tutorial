@@ -1,7 +1,7 @@
 
 import {Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia } from "@mui/material"
 import axios from "axios"
-import { useEffect, useLayoutEffect, useState, useTransition } from "react"
+import { useCallback, useEffect, useMemo, useState, useTransition } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { addToCartClick, removeToCartList } from "../slicer/slicer"
@@ -20,62 +20,62 @@ export default function UserDashboard(){
     const savedVideos = useSelector(state=>state.videos)
     const videosCount = useSelector(state=>state.videosCount)
 
-    function handleSaveClick(video){
+    const handleSaveClick = useCallback((video)=>{
         dispatch(addToCartClick(video))
-    }
+    },[])
 
-    function handleDeleteClick(video){
+    const handleDeleteClick = useCallback((video)=>{
         dispatch(removeToCartList(video))
-    }
+    },[])
 
-    function LoadVideos(){
+    const LoadVideos = useCallback(()=>{
         axios.get(`http://localhost:3000/videos`)
         .then(res=>{
             setVideos(res.data)
     })
-    }
+    },[])
 
-    function LoadCategories(){
+    const LoadCategories = useCallback(()=>{
         axios.get(`http://localhost:3000/categories`)
         .then(res=>
             setCategories(res.data)
         )
-    }
+    },[])
 
-    function handleLikeClick(video){
+    const handleLikeClick = useCallback((video)=>{
         const updateLikes = video.likes + 1
         axios.patch(`http://localhost:3000/videos/${video.id}`,{likes:updateLikes})
         .then(()=>{
             LoadVideos()
         })
-    }
+    },[])
 
-    function handleDislikeClick(video){
+    const handleDislikeClick = useCallback((video)=>{
         const updateDislikes = video.dislikes + 1
         axios.patch(`http://localhost:3000/videos/${video.id}`,{dislikes : updateDislikes})
         .then(()=>{
             LoadVideos()
         })
-    }
+    },[])
 
-    useLayoutEffect(()=>{
+    useEffect(()=>{
          LoadVideos()
         LoadCategories()
     },[])
 
-    function valueChange(e){
+    const valueChange = useCallback((e)=>{
         setSearchText(e.target.value)
-    }
+    },[])
 
-    function SortChange(e){
+    const SortChange = useCallback((e)=>{
         setSortItem(e.target.value)
-    }
+    },[])
 
-    function CourseChange(e){
+    const CourseChange = useCallback((e)=>{
         setCourse(e.target.value)
-    }
+    },[])
     
-    function AllFilters(){
+    const AllFilters = useMemo(()=>{
         var values = [...videos]
 
         if(searchText){
@@ -95,9 +95,7 @@ export default function UserDashboard(){
         }
 
         return values
-    }
-
-    const filterVideos = AllFilters()
+    },[videos,searchText,sortItem,course])
 
     return(
         <div className="container-fluid bg-secondary">
@@ -168,7 +166,7 @@ export default function UserDashboard(){
             </nav>
             <section className=" row g-3 d-flex flex-wrap justify-content-evenly align-items-center">
                 {
-                    filterVideos.map((video,i)=>
+                    AllFilters.map((video,i)=>
                      <div className="col-12 col-md-4 col-sm-6 col-lg-3">
                         <Card className="p-1 m-1" key={i}>
                         <CardMedia component="iframe" height="200" src={video.url} controls />

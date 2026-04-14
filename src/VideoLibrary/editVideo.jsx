@@ -1,7 +1,7 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup"
 
@@ -12,11 +12,11 @@ export default function EditVideo(){
     const params = useParams()
     const [video,setVideo] = useState({})
     
-    function cancelClick(){
+    const cancelClick = useCallback(()=>{
         navigate("/admin-dashboard")
-    }
+    },[])
 
-    useLayoutEffect(()=>{
+    useEffect(()=>{
         axios.get(`http://localhost:3000/videos/${params.id}`)
         .then(res=>{
             setVideo(res.data)

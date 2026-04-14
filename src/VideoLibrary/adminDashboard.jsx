@@ -1,7 +1,6 @@
 import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia } from "@mui/material"
 import axios from "axios"
-import { useLayoutEffect } from "react"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useCookies } from "react-cookie"
 import { useNavigate } from "react-router-dom"
 
@@ -15,22 +14,22 @@ export default function AdminDashboard(){
     const [searchText,setSearchText]  = useState("")
     const [sortItem,setSortItem] =  useState("")
 
-    function LoadVideos(){
+    const LoadVideos = useCallback(()=>{
         axios.get(`http://localhost:3000/videos`)
         .then(res=>{
              console.log(res.data)
             setVideos(res.data)
     })
-    }
+    },[])
 
-    function LoadCategories(){
+    const LoadCategories = useCallback(()=>{
         axios.get(`http://localhost:3000/categories`)
         .then(res=>
             setCategories(res.data)
         )
-    }
+    },[])
 
-    useLayoutEffect(()=>{
+    useEffect(()=>{
         LoadVideos()
         LoadCategories()
         if(!cookie['admin_id']){
@@ -38,31 +37,32 @@ export default function AdminDashboard(){
         }
     },[])
 
-    function SignOutClick(){
+    const SignOutClick = useCallback(()=>{
         removeCookie('admin_id')
         navigate("/admin-login")
-    }
+    },[])
 
-    function EditClick(id){
+    const EditClick = useCallback((id)=>{
         navigate(`/edit-video/${id}`)
-    }
+    },[])
 
-    function DeleteClick(id){
+    const DeleteClick = useCallback((id)=>{
         navigate(`/delete-video/${id}`)
-    }
-    function addClick(){
+    },[])
+
+    const addClick = useCallback(()=>{
         navigate("/add-video")
-    }
+    },[])
 
-    function valueChange(e){
+    const valueChange = useCallback((e)=>{
         setSearchText(e.target.value)
-    }
+    },[])
 
-    function SortChange(e){
+    const SortChange = useCallback((e)=>{
         setSortItem(e.target.value)
-    }
+    },[])
     
-    function allFilterItems(){
+    const allFilterItems = useMemo(()=>{
         var values = [...videos]
 
         if(sortItem==="likes"){
@@ -78,9 +78,7 @@ export default function AdminDashboard(){
         }
 
         return values;
-    }
-
-    const filterVideos = allFilterItems()
+    },[videos,searchText,sortItem])
 
 
     return(
@@ -111,7 +109,7 @@ export default function AdminDashboard(){
             </nav>
             <section className=" row g-3 p-3 d-flex flex-wrap justify-content-evenly align-items-center">
                 {
-                    filterVideos.map((video,i)=>
+                    allFilterItems.map((video,i)=>
                      <Card className="p-1 m-1" sx={{width:"270px"}} key={i}>
                         <CardMedia component="iframe" height="200" src={video.url} controls />
                         <CardHeader title={video.title} />
