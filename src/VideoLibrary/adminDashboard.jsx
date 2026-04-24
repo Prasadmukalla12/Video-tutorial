@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia } from "@mui/material"
+import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Skeleton } from "@mui/material"
 import axios from "axios"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useCookies } from "react-cookie"
@@ -13,12 +13,15 @@ export default function AdminDashboard(){
     const navigate = useNavigate()
     const [searchText,setSearchText]  = useState("")
     const [sortItem,setSortItem] =  useState("")
+    const [loading,setLoading] = useState(true)
 
     const LoadVideos = useCallback(()=>{
         axios.get(`http://localhost:3000/videos`)
         .then(res=>{
-             console.log(res.data)
-            setVideos(res.data)
+            setTimeout(()=>{
+                setVideos(res.data)
+                setLoading(false)
+            },3000)
     })
     },[])
 
@@ -109,6 +112,7 @@ export default function AdminDashboard(){
             </nav>
             <section className=" row g-3 p-3 d-flex flex-wrap justify-content-evenly align-items-center">
                 {
+                    (!loading)? 
                     allFilterItems.map((video,i)=>
                      <Card className="p-1 m-1" sx={{width:"270px"}} key={i}>
                         <CardMedia component="iframe" height="200" src={video.url} controls />
@@ -125,7 +129,9 @@ export default function AdminDashboard(){
                                 <Button variant="contained" onClick={()=>{DeleteClick(video.id)}} fullWidth color="error">Delete</Button>
                         </CardActions>
                      </Card>
-                    )
+                    ) : (<div>
+                         <p className="text-white">Please wait...</p>
+                    </div>)
                 }
             </section>
         </div>

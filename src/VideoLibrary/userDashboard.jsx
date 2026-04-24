@@ -15,6 +15,7 @@ export default function UserDashboard(){
     const [searchText,setSearchText]  = useState("")
     const [sortItem,setSortItem] =  useState("")
     const [course,setCourse] = useState("")
+    const [loading,setLoading] = useState(true)
 
     const dispatch = useDispatch()
     const savedVideos = useSelector(state=>state.videos)
@@ -31,7 +32,10 @@ export default function UserDashboard(){
     const LoadVideos = useCallback(()=>{
         axios.get(`http://localhost:3000/videos`)
         .then(res=>{
-            setVideos(res.data)
+            setTimeout(()=>{
+                setVideos(res.data)
+                setLoading(false)
+            },3000)
     })
     },[])
 
@@ -166,6 +170,7 @@ export default function UserDashboard(){
             </nav>
             <section className=" row g-3 d-flex flex-wrap justify-content-evenly align-items-center">
                 {
+                    (!loading) ? 
                     AllFilters.map((video,i)=>
                      <div className="col-12 col-md-4 col-sm-6 col-lg-3">
                         <Card className="p-1 m-1" key={i}>
@@ -181,6 +186,10 @@ export default function UserDashboard(){
                         <Button onClick={()=>{handleSaveClick(video)}} className="bi bi-eye" variant="contained" color="secondary" fullWidth >Save</Button>
                      </Card>
                      </div>
+                    ) : (
+                        <div>
+                            <p className="text-white">Please wait...</p>
+                        </div>
                     )
                 }
             </section>

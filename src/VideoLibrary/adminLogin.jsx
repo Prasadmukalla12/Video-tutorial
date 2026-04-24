@@ -24,7 +24,7 @@ export default function AdminLogin(){
             var result = res.data.find(item=>admin.admin_id===item.admin_id)
             if(result){
                if(result.password===admin.password){
-                  setCookie("admin_id",admin.admin_id,{expires:new Date("2026-03-25")})
+                  setCookie("admin_id",admin.admin_id,{expires:new Date("2026-08-25")})
                   navigate("/admin-dashboard")
                }else{
                  alert("Invalid Password")
